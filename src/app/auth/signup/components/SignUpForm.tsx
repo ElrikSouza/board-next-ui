@@ -1,0 +1,21 @@
+"use client";
+
+import { Box } from "@mui/material";
+import { useSignUpForm } from "../hooks/useSignUpForm";
+import { SignUpFormActions } from "./SignUpFormActions";
+import { SignUpFormFields } from "./SignUpFormFields";
+
+export function SignUpForm() {
+  const { control, hasError, handleSubmit } = useSignUpForm();
+  const submitFn = handleSubmit(console.log);
+
+  return (
+    <Box sx={{ display: "flex", flexFlow: "column", gap: "1.5rem" }}>
+      <Box sx={{ display: "flex", flexFlow: "column", gap: "1rem" }}>
+        <SignUpFormFields control={control} />
+      </Box>
+
+      <SignUpFormActions isSubmitDisabled={hasError} onSubmit={submitFn} />
+    </Box>
+  );
+}
