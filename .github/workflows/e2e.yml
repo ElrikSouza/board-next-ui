@@ -75,7 +75,7 @@ jobs:
       - name: "Run backend"
         run: |
           cd ../board-api
-          npm run start &
+          npm run start
 
       - name: "Wait for back"
         run: "sleep 5"
