@@ -11,6 +11,7 @@ export default function Home() {
   console.log(data, error);
   return (
     <main>
+      teste
       {!isLoading && <div data-testid="result">{data as any}</div>}
       <Link href="/auth/login">Login</Link>
       <Link href="/auth/signup">Sign up</Link>
