@@ -46,17 +46,8 @@ jobs:
           name: "clone backend"
           command: "cd .. && git clone https://github.com/ElrikSouza/board-api.git"
       - run:
-          name: "cd back"
-          command: "cd ../board-api"
-      - run:
-          name: "pwd"
-          command: "cd ../board-api && pwd"
-      - run:
           name: "back deps"
           command: "cd ../board-api && rm -rf node_modules && yarn install --frozen-lockfile"
-      - run:
-          name: "docker ps"
-          command: "sudo docker ps"
       - run:
           name: "build back"
           command: "cd ../board-api && yarn build"
