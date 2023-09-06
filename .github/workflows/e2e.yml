@@ -41,23 +41,23 @@ jobs:
           node-version: 18
           cache: "npm"
 
-      # - name: "Install front deps"
-      #   run: "npm ci"
+      - name: "Install front deps"
+        run: "npm ci"
 
-      # - name: "check resources"
-      #   run: "free -h"
+      - name: "check resources"
+        run: "free -h"
 
-      # - name: "Build front"
-      #   run: "npm run build"
+      - name: "Build front"
+        run: "npm run build"
 
-      # - name: "Run front"
-      #   run: "PORT=5173 npm run start &"
+      - name: "Run front"
+        run: "PORT=5173 npm run start &"
 
-      # - name: "Wait for front"
-      #   run: "sleep 5"
+      - name: "Wait for front"
+        run: "sleep 5"
 
-      # - name: "Validate with curl"
-      #   run: "curl localhost:5173"
+      - name: "Validate with curl"
+        run: "curl localhost:5173"
 
       - name: "Clone backend"
         run: "cd .. && git clone https://github.com/ElrikSouza/board-api.git"
@@ -81,7 +81,23 @@ jobs:
           npm run start &
 
       - name: "Wait for back"
-        run: "sleep 10"
+        run: "sleep 7"
 
       - name: "Validate with curl"
         run: "curl localhost:3000"
+
+      - name: "Clone QA"
+        run: cd .. && git clone https://github.com/ElrikSouza/board-qa.git
+
+      - name: "Install QA dependencies"
+        run: |
+          cd ../board-qa
+          rm -rf node_modules && yarn install --frozen-lockfile
+
+      - name: "Install Playwright"
+        run: npx playwright install --with-deps
+
+      - name: "Run tests"
+        run: |
+          cd ../board-qa
+          npx playwright test
