@@ -5,22 +5,65 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/configuration-reference/#executor-job
+  merge-main:
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/configuration-reference/#steps
+      - image: cimg/node:20.6.0
+      - image: cimg/redis:6.2
+      - image: cimg/postgres:15.3
+    environment:
+      DB_USER: postgres
+      DB_PASS: postgres
+      DB_HOST: localhost
+      DB_PORT: 5432
+      REDIS_PORT: 6379
     steps:
       - checkout
+
       - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
+          name: "check branch"
+          command: "git rev-parse --abbrev-ref HEAD"
+      - run:
+          name: "Merge main"
+          command: "git merge main"
+      - run:
+          name: "test"
+          command: "test"
+      # - save_cache:
+      #     key: dependency-cache-{{ checksum "package-lock.json" }}
+      #     paths:
+      #       - ./node_modules
+      #       - ./.next/cache
+      # - run:
+      #     name: "install dependencies"
+      #     command: "npm ci"
+      # - run:
+      #     name: "build"
+      #     command: "npm run build"
+      # - run:
+      #     name: "npm run start -d"
+      #     command: "npm run start -d"
+      # - run:
+      #     name: "clone backend"
+      #     command: "cd .. && git clone https://github.com/ElrikSouza/board-api.git"
+      # - run:
+      #     name: "cd back"
+      #     command: "cd ../board-api"
+      # - run:
+      #     name: "pwd"
+      #     command: "cd ../board-api && pwd"
+      # - run:
+      #     name: "back deps"
+      #     command: "cd ../board-api && rm -rf node_modules && yarn install --frozen-lockfile"
+      # - run:
+      #     name: "docker ps"
+      #     command: "sudo docker ps"
+      # - run:
+      #     name: "run back"
+      #     command: "cd ../board-api && yarn start:dev"
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
+      - merge-main
