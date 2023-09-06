@@ -20,6 +20,12 @@ jobs:
       - checkout
 
       - run:
+          name: "whathever that is"
+          command: echo 127.0.0.1 devhost | sudo tee -a /etc/hosts
+      - run:
+          name: "whathever that is"
+          command: echo 127.0.0.1 localhost | sudo tee -a /etc/hosts
+      - run:
           name: "check branch"
           command: "git rev-parse --abbrev-ref HEAD"
       - run:
@@ -41,9 +47,13 @@ jobs:
           command: "npm run build"
       - run:
           name: "npm run start -d"
-          command: "(npm run start &)"
+          command: "PORT=5173 npm run start"
+          background: true
           environment:
             PORT: 5173
+      - run:
+          name: "teste"
+          command: "sleep 7 && curl localhost:5173"
       - run:
           name: "clone backend"
           command: "cd .. && git clone https://github.com/ElrikSouza/board-api.git"
@@ -55,7 +65,8 @@ jobs:
           command: "cd ../board-api && yarn build"
       - run:
           name: "run back"
-          command: "cd ../board-api && (yarn start:prod &)"
+          command: "cd ../board-api && yarn start:prod"
+          background: true
       - run:
           name: "checkout qa"
           command: "cd .. && git clone https://github.com/ElrikSouza/board-qa.git"
