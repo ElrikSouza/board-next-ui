@@ -1,6 +1,13 @@
 name: E2E Poc
 run-name: e2e poc
 
+env:
+  DB_USER: postgres
+  DB_PASS: postgres
+  DB_HOST: localhost
+  DB_PORT: 5432
+  REDIS_PORT: 6379
+
 on:
   workflow_dispatch:
 
@@ -12,6 +19,18 @@ jobs:
   front_build:
     name: "Frontend build"
     runs-on: ubuntu-latest
+    # Service containers to run with `container-job`
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
     steps:
       - name: "Checkout the Frontend"
         uses: actions/checkout@v3
@@ -29,4 +48,56 @@ jobs:
         run: "free -h"
 
       - name: "Build front"
-        run: "yarn build"
+        run: "npm run build"
+
+      - name: "Run front"
+        run: "PORT=5173 npm run start &"
+
+      - name: "Wait for front"
+        run: "sleep 5"
+
+      - name: "Validate with curl"
+        run: "curl localhost:5173"
+
+      - name: "Clone backend"
+        run: "cd .. && git clone https://github.com/ElrikSouza/board-api.git"
+
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.7.0
+
+      - name: "Install backend dependencies"
+        run: |
+          cd ../board-api
+          npm install
+
+      - name: "Build backend"
+        run: |
+          cd ../board-api
+          npm run build
+
+      - name: "Run backend"
+        run: |
+          cd ../board-api
+          npm run start &
+
+      - name: "Wait for back"
+        run: "sleep 7"
+
+      - name: "Validate with curl"
+        run: "curl localhost:3000"
+
+      - name: "Clone QA"
+        run: cd .. && git clone https://github.com/ElrikSouza/board-qa.git
+
+      - name: "Install QA dependencies"
+        run: |
+          cd ../board-qa
+          rm -rf node_modules && yarn install --frozen-lockfile
+
+      - name: "Install Playwright"
+        run: npx playwright install --with-deps
+
+      - name: "Run tests"
+        run: |
+          cd ../board-qa
+          npx playwright test
