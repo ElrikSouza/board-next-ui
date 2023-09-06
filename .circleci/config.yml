@@ -8,8 +8,8 @@ jobs:
   merge-main:
     docker:
       - image: cimg/node:20.6.0
-      # - image: cimg/redis:6.2
-      # - image: cimg/postgres:15.3
+      - image: cimg/redis:6.2
+      - image: cimg/postgres:15.3
     environment:
       DB_USER: postgres
       DB_PASS: postgres
