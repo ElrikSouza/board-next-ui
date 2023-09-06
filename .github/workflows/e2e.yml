@@ -1,6 +1,13 @@
 name: E2E Poc
 run-name: e2e poc
 
+env:
+  DB_USER: postgres
+  DB_PASS: postgres
+  DB_HOST: localhost
+  DB_PORT: 5432
+  REDIS_PORT: 6379
+
 on:
   workflow_dispatch:
 
@@ -58,3 +65,20 @@ jobs:
       - name: "Install backend dependencies"
         run: |
           cd ../board-api
+          npm ci
+
+      - name: "Build backend"
+        run: |
+          cd ../board-api
+          npm run build
+
+      - name: "Run backend"
+        run: |
+          cd ../board-api
+          npm run start &
+
+      - name: "Wait for back"
+        run: "sleep 5"
+
+      - name: "Validate with curl"
+        run: "curl localhost:3000"
