@@ -30,3 +30,12 @@ jobs:
 
       - name: "Build front"
         run: "yarn build"
+
+      - name: "Run front"
+        run: "PORT=5173 yarn start:prod &"
+
+      - name: "Wait for front"
+        run: "sleep 5"
+
+      - name: "Validate with curl"
+        run: "curl localhost:5173"
