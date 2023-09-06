@@ -8,8 +8,8 @@ jobs:
   merge-main:
     docker:
       - image: cimg/node:20.6.0
-      - image: cimg/redis:6.2
-      - image: cimg/postgres:15.3
+      # - image: cimg/redis:6.2
+      # - image: cimg/postgres:15.3
     environment:
       DB_USER: postgres
       DB_PASS: postgres
@@ -27,21 +27,33 @@ jobs:
           command: "git merge main"
       - run:
           name: "test"
-          command: "test"
-      # - save_cache:
-      #     key: dependency-cache-{{ checksum "package-lock.json" }}
-      #     paths:
-      #       - ./node_modules
-      #       - ./.next/cache
-      # - run:
-      #     name: "install dependencies"
-      #     command: "npm ci"
-      # - run:
-      #     name: "build"
-      #     command: "npm run build"
-      # - run:
-      #     name: "npm run start -d"
-      #     command: "npm run start -d"
+          command: "echo test"
+      - save_cache:
+          key: dependency-cache-{{ checksum "package-lock.json" }}
+          paths:
+            - ./node_modules
+            - ./.next/cache
+      - run:
+          name: "install dependencies"
+          command: "npm ci"
+      - run:
+          name: "build"
+          command: "npm run build"
+      - run:
+          name: "npm run start -d"
+          command: "(npm run start&)"
+      - run:
+          name: "checkout qa"
+          command: "cd .. && git clone https://github.com/ElrikSouza/board-qa.git"
+      - run:
+          name: "build qa"
+          command: "cd ../board-qa && rm -rf node_modules && yarn install --frozen-lockfile"
+      - run:
+          name: "build qa"
+          command: "npx playwright install --with-deps"
+      - run:
+          name: "build qa"
+          command: "cd ../board-qa && npx playwright test"
       # - run:
       #     name: "clone backend"
       #     command: "cd .. && git clone https://github.com/ElrikSouza/board-api.git"
