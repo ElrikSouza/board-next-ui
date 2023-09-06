@@ -93,10 +93,9 @@ jobs:
 # See: https://circleci.com/docs/configuration-reference/#workflows
 workflows:
   e2etest:
-    filters:
-      branches:
-        only:
-          - protected
-
     jobs:
-      - merge-main
+      - merge-main:
+          filters:
+            branches:
+              only:
+                - protected
