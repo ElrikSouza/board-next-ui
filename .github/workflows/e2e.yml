@@ -81,7 +81,7 @@ jobs:
           npm run start &
 
       - name: "Wait for back"
-        run: "sleep 5"
+        run: "sleep 10"
 
       - name: "Validate with curl"
         run: "curl localhost:3000"
