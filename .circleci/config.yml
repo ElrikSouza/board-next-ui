@@ -42,6 +42,8 @@ jobs:
       - run:
           name: "npm run start -d"
           command: "(npm run start -p 5173 &)"
+          environment:
+            PORT: 5173
       - run:
           name: "clone backend"
           command: "cd .. && git clone https://github.com/ElrikSouza/board-api.git"
