@@ -41,7 +41,7 @@ jobs:
           command: "npm run build"
       - run:
           name: "npm run start -d"
-          command: "(npm run start -p 5173 &)"
+          command: "(npm run start &)"
           environment:
             PORT: 5173
       - run:
