@@ -12,6 +12,7 @@ export default function Home() {
   return (
     <main>
       {!isLoading && <div data-testid="result">{data as any}</div>}
+
       <Link href="/auth/login">Login</Link>
       <Link href="/auth/signup">Sign up</Link>
     </main>
