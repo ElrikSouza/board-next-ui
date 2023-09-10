@@ -1,13 +1,14 @@
-import { Box, Input, InputProps, Typography } from "@mui/material";
+import { Box, TextField, TextFieldProps, Typography } from "@mui/material";
 import { FieldValues, useController } from "react-hook-form";
 import { BaseControlledFieldProps } from "./controlled-input.type";
 
 export type ControlledInputProps<TForm extends FieldValues> =
-  BaseControlledFieldProps<TForm> & InputProps;
+  BaseControlledFieldProps<TForm> & TextFieldProps;
 
 export function ControlledInput<TForm extends FieldValues>({
   name,
   control,
+  variant = "outlined",
   ...props
 }: ControlledInputProps<TForm>) {
   const {
@@ -19,11 +20,13 @@ export function ControlledInput<TForm extends FieldValues>({
 
   return (
     <Box sx={{ display: "flex", flexFlow: "column", width: "100%" }}>
-      <Input
+      <TextField
         {...{ ...props, value, onBlur, onChange }}
-        sx={{ width: "100%" }}
+        sx={{ width: "100%", borderRadius: "8px" }}
         error={!!errorMsg}
+        variant={variant}
       />
+
       {!!errorMsg && <Typography>{errorMsg}</Typography>}
     </Box>
   );

@@ -9,8 +9,7 @@ export default function AuthLayout({ children }: ChildrenProps) {
         height: "100%",
         width: "100%",
         placeItems: "center",
-        background:
-          "linear-gradient(90deg, hsla(329, 57%, 53%, 1) 0%, hsla(357, 55%, 46%, 1) 100%);",
+        background: "linear-gradient(179deg, #4056CE 16.49%, #511C45 99.63%)",
       }}
     >
       {children}

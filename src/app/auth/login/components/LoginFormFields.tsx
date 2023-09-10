@@ -10,8 +10,19 @@ export interface LoginFormFieldsProps {
 export function LoginFormFields({ control }: LoginFormFieldsProps) {
   return (
     <>
-      <ControlledInput control={control} name="email" type="email" />
-      <ControlledInput control={control} name="password" type="password" />
+      <ControlledInput
+        control={control}
+        label="Email"
+        name="email"
+        type="email"
+      />
+
+      <ControlledInput
+        control={control}
+        label="Password"
+        name="password"
+        type="password"
+      />
     </>
   );
 }

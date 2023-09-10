@@ -1,3 +1,4 @@
+import { appColors } from "@/app/colors";
 import { ChildrenProps } from "@/app/util.types";
 import { Box, Typography } from "@mui/material";
 
@@ -15,15 +16,16 @@ export function AuthCard({ title, subtitle, children }: AuthCardProps) {
         display: "grid",
         gridTemplateRows: "auto 1fr auto",
         background: "#FFF",
-        borderRadius: "10px",
-        padding: "1rem",
-        aspectRatio: "1/1",
-        gap: "1.5rem",
+        borderRadius: "12px",
+        padding: "2rem",
+        gap: "2rem",
       }}
     >
       <Box sx={{ display: "flex", flexFlow: "column", gap: ".25rem" }}>
-        <Typography>{title}</Typography>
-        <Typography>{subtitle}</Typography>
+        <Typography variant="titleMedium">{title}</Typography>
+        <Typography variant="subtitleMedium" color={appColors.textAlt}>
+          {subtitle}
+        </Typography>
       </Box>
 
       <Box>{children}</Box>

@@ -1,5 +1,6 @@
 "use client";
-import { Box, Button, Divider } from "@mui/material";
+import { appColors } from "@/app/colors";
+import { Box, Button, Divider, Typography } from "@mui/material";
 import Link from "next/link";
 
 export interface AuthFormActionsProps {
@@ -22,17 +23,29 @@ export function AuthFormAction({
       sx={{
         display: "flex",
         flexFlow: "column",
-        gap: "1rem",
+        gap: ".5rem",
         alignItems: "center",
       }}
     >
-      <Button disabled={isSubmitDisabled} onClick={onSubmit}>
+      <Button
+        disabled={isSubmitDisabled}
+        onClick={onSubmit}
+        variant="contained"
+        color="primary"
+        fullWidth
+      >
         {submitLbl}
       </Button>
 
       <Divider>Or</Divider>
 
-      <Link href={linkTo}>{linkLbl}</Link>
+      <Typography
+        {...{ component: Link, href: linkTo }}
+        variant="button"
+        color={appColors.secondary}
+      >
+        {linkLbl}
+      </Typography>
     </Box>
   );
 }
