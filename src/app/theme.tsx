@@ -56,6 +56,7 @@ export const appTheme = createTheme({
           fontWeight: 600,
           textTransform: "none",
           padding: ".5rem 1rem",
+          letterSpacing: "unset",
         },
         contained: {
           borderRadius: ".25rem",
