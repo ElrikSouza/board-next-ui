@@ -85,6 +85,7 @@ jobs:
       - name: Unlock backend pr if needed
         run: |
           echo $PRE_MERGE_SHA
+
           if [[ ! "$PRE_MERGE_SHA" == "ignore" ]]
           then
             gh api \
