@@ -6,3 +6,6 @@ export interface BoardEntryDTO {
 export interface CreateBoardDTO {
   title: string;
 }
+
+export interface BoardCardDTO {
+}

@@ -4,6 +4,7 @@ import { appColors } from "./colors";
 declare module "@mui/material/styles" {
   interface TypographyVariants {
     titleMedium: React.CSSProperties;
+    titleSmall: React.CSSProperties;
     captionMedium: React.CSSProperties;
     subtitleMedium: React.CSSProperties;
   }
@@ -11,6 +12,7 @@ declare module "@mui/material/styles" {
   // allow configuration using `createTheme`
   interface TypographyVariantsOptions {
     titleMedium?: React.CSSProperties;
+    titleSmall?: React.CSSProperties;
     captionMedium?: React.CSSProperties;
     subtitleMedium?: React.CSSProperties;
   }
@@ -20,6 +22,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     titleMedium: true;
+    titleSmall: true;
     captionMedium: true;
     subtitleMedium: true;
   }
@@ -34,6 +37,10 @@ export const appTheme = createTheme({
     titleMedium: {
       fontSize: "1.5rem",
       fontWeight: 700,
+    },
+    titleSmall: {
+      fontSize: "1rem",
+      fontWeight: 600,
     },
     button: {
       fontSize: "1rem",
