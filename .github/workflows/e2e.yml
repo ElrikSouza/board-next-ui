@@ -95,5 +95,5 @@ jobs:
               -f state='success' \
               -f description='Testes e2e passaram' \
               -f context='E2E Test' \
-              -f target_url "https://github.com/ElrikSouza/board-next-ui/pull/${{ github.event.pull_request.number}}"
+              -f target_url="https://github.com/ElrikSouza/board-next-ui/pull/${{ github.event.pull_request.number}}"
           fi
