@@ -6,7 +6,7 @@ on:
 
   pull_request:
     branches:
-      - protected
+     - main 
 
 jobs:
   front_build:
@@ -30,3 +30,51 @@ jobs:
 
       - name: "Build front"
         run: "yarn build"
+
+      - name: Login into github cli
+        env:
+          GIT_TOKEN: "${{ secrets.TOKEN }}"
+        run: echo ${GIT_TOKEN} | gh auth login --with-token
+
+      - name: Set up git identity
+        run: |
+          git config --global user.email "ci@example.com"
+          git config --global user.name "ci"
+
+      - name: Get pr branch
+        env:
+          PR_BODY: "${{ github.event.pull_request.body }}"
+        run: |
+          PR=$(echo "$PR_BODY" | grep "back pr=" | { grep -v grep || true; })
+          IFS='='
+          read -ra arr <<< "$PR"
+          PR_URL=$(echo ${arr[1]} | xargs echo -n)
+          if [ ! -z "$PR_URL" ]
+          then
+            # merge hub server feature with main
+            echo "PR url detected. Merging with main..."
+            cd hub-server
+            gh pr checkout $PR_URL
+
+            PRE_MERGE_SHA=$(git rev-parse HEAD)
+            echo "PRE_MERGE_SHA=$PRE_MERGE_SHA" >> "$GITHUB_ENV"
+
+            git merge main
+
+            # set front pr as pending
+            cd ..
+            FRONT_HEAD_SHA="${{ github.event.pull_request.head.sha }}"
+            gh api \
+              --method POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              /repos/ElrikSouza/board-next-ui/statuses/$FRONT_HEAD_SHA \
+              -f state='pending' \
+              -f description='Esperando merge da pr do back' \
+              -f context='E2E Test/Merge'
+
+          else
+            echo "No PR url detected. Using the main brach for testing"
+            PRE_MERGE_SHA="ignore"
+            echo "PRE_MERGE_SHA=$PRE_MERGE_SHA" >> "$GITHUB_ENV"
+          fi
