@@ -6,7 +6,6 @@ export const baseAuthSchema = {
     .email()
     .required("Email is required")
     .max(120, "Email field can be up to 120 characters long"),
-
   password: yup
     .string()
     .required("Password is required")
