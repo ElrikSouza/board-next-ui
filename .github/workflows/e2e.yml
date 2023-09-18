@@ -16,20 +16,20 @@ jobs:
       - name: "Checkout the Frontend"
         uses: actions/checkout@v3
 
-      - name: "Use node 18"
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "npm"
+      # - name: "Use node 18"
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 18
+      #     cache: "npm"
 
-      - name: "Install front deps"
-        run: "npm install"
+      # - name: "Install front deps"
+      #   run: "npm install"
 
-      - name: "check resources"
-        run: "free -h"
+      # - name: "check resources"
+      #   run: "free -h"
 
-      - name: "Build front"
-        run: "yarn build"
+      # - name: "Build front"
+      #   run: "yarn build"
 
       - name: Login into github cli
         env:
@@ -57,7 +57,7 @@ jobs:
           then
             # merge hub server feature with main
             echo "PR url detected. Merging with main..."
-            cd board_api 
+            cd board-api 
             gh pr checkout $PR_URL
 
             PRE_MERGE_SHA=$(git rev-parse HEAD)
