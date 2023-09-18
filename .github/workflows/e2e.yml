@@ -6,7 +6,7 @@ on:
 
   pull_request:
     branches:
-     - main 
+      - main
 
 jobs:
   front_build:
@@ -23,7 +23,7 @@ jobs:
           cache: "npm"
 
       - name: "Install front deps"
-        run: "npm ci"
+        run: "npm install"
 
       - name: "check resources"
         run: "free -h"
