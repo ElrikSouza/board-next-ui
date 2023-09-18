@@ -52,17 +52,16 @@ jobs:
           if [ ! -z "$PR_URL" ]
           then
             # merge hub server feature with main
-            echo "PR url detected. Merging with main..."
-            cd hub-server
-            gh pr checkout $PR_URL
+            # echo "PR url detected. Merging with main..."
+            # cd hub-server
+            # gh pr checkout $PR_URL
 
-            PRE_MERGE_SHA=$(git rev-parse HEAD)
-            echo "PRE_MERGE_SHA=$PRE_MERGE_SHA" >> "$GITHUB_ENV"
+            # PRE_MERGE_SHA=$(git rev-parse HEAD)
+            # echo "PRE_MERGE_SHA=$PRE_MERGE_SHA" >> "$GITHUB_ENV"
 
-            git merge main
+            # git merge main
 
             # set front pr as pending
-            cd ..
             FRONT_HEAD_SHA="${{ github.event.pull_request.head.sha }}"
             gh api \
               --method POST \
