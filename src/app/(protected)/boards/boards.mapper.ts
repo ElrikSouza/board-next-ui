@@ -1,7 +1,7 @@
 import { BoardEntryDTO } from "@/dtos";
-import { BoardGridEntry } from "./boards.types";
+import { TBoardGridEntry } from "./boards.types";
 
-const mapBoardsDTOToBoardGridEntry = (dto: BoardEntryDTO): BoardGridEntry => ({
+const mapBoardsDTOToBoardGridEntry = (dto: BoardEntryDTO): TBoardGridEntry => ({
   id: dto.id,
   title: dto.title,
 });

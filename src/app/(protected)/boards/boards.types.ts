@@ -1,10 +1,16 @@
-export type BoardGridEntry = {
+export type TBoardGridEntry = {
   id: string;
   title: string;
 };
 
-export type BoardColumn = {
+export type TBoardColumn = {
   id: string;
   title: string;
-  cards: Record<string, unknown>;
+  cards: TBoardCard[];
+};
+
+export type TBoardCard = {
+  id: string;
+  title: string;
+  description?: string;
 };
